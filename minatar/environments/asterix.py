@@ -35,7 +35,7 @@ class Env:
         }
         self.action_map = ['n','l','u','r','d','f']
         self.ramping = ramping
-        self.random = np.random.RandomState()
+        self.random = np.random.default_rng()
         self.reset()
 
     # Update environment according to agent action
@@ -106,13 +106,13 @@ class Env:
 
     # Spawn a new enemy or treasure at a random location with random direction (if all rows are filled do nothing)
     def _spawn_entity(self):
-        lr = self.random.rand() < 1/2
-        is_gold = self.random.rand() < 1/3
+        lr = self.random.random() < 1/2
+        is_gold = self.random.random() < 1/3
         x = 0 if lr else 9
         slot_options = [i for i in range(len(self.entities)) if self.entities[i]==None]
         if(not slot_options):
             return
-        slot = slot_options[self.random.randint(len(slot_options))]
+        slot = slot_options[self.random.integers(len(slot_options))]
         self.entities[slot] = [x,slot+1,lr,is_gold]
 
     # Query the current level of the difficulty ramp, could be used as additional input to agent for example

@@ -40,7 +40,7 @@ class Env:
         }
         self.action_map = ['n','l','u','r','d','f']
         self.ramping = ramping
-        self.random = np.random.RandomState()
+        self.random = np.random.default_rng()
         self.reset()
 
     # Update environment according to agent action

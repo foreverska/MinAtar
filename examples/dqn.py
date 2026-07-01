@@ -162,7 +162,7 @@ def world_dynamics(t, replay_start_size, num_actions, s, env, policy_net):
 
     # A uniform random policy is run before the learning starts
     if t < replay_start_size:
-        action = torch.tensor([[random.randrange(num_actions)]], device=device)
+        action = torch.tensor([[env.random.integers(num_actions)]], device=device)
     else:
         # Epsilon-greedy behavior policy for action selection
         # Epsilon is annealed linearly from 1.0 to END_EPSILON over the FIRST_N_FRAMES and stays 0.1 for the
@@ -170,8 +170,8 @@ def world_dynamics(t, replay_start_size, num_actions, s, env, policy_net):
         epsilon = END_EPSILON if t - replay_start_size >= FIRST_N_FRAMES \
             else ((END_EPSILON - EPSILON) / FIRST_N_FRAMES) * (t - replay_start_size) + EPSILON
 
-        if numpy.random.binomial(1, epsilon) == 1:
-            action = torch.tensor([[random.randrange(num_actions)]], device=device)
+        if env.random.binomial(1, epsilon) == 1:
+            action = torch.tensor([[env.random.integers(num_actions)]], device=device)
         else:
             # State is 10x10xchannel, max(1)[1] gives the max action value (i.e., max_{a} Q(s, a)).
             # view(1,1) shapes the tensor to be the right form (e.g. tensor([[0]])) without copying the

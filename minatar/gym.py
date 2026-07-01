@@ -19,6 +19,7 @@ class BaseEnv(gym.Env):
 
     def __init__(self, game, render_mode=None, display_time=50,
                 use_minimal_action_set=False, **kwargs):
+        super().__init__()
         self.render_mode = render_mode
         self.display_time = display_time
 
@@ -45,6 +46,7 @@ class BaseEnv(gym.Env):
         self.game.seed(seed)
 
     def reset(self, seed=None, options=None):
+        super().reset(seed=seed)
         if seed is not None:
             self.seed(seed)
         self.game.reset()
@@ -54,7 +56,7 @@ class BaseEnv(gym.Env):
 
     def render(self):
         if self.render_mode is None:
-            gym.logger.warn(
+            gym.logger.warning(
                 "You are calling render method without specifying any render mode. "
                 "You can specify the render_mode at initialization, "
                 f'e.g. gym("{self.spec.id}", render_mode="rgb_array")'

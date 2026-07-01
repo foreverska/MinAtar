@@ -25,7 +25,7 @@ class Env:
             'brick':3,
         }
         self.action_map = ['n','l','u','r','d','f']
-        self.random = np.random.RandomState()
+        self.random = np.random.default_rng()
         self.reset()
 
     # Update environment according to agent action
@@ -111,7 +111,7 @@ class Env:
     # Reset to start state for new episode
     def reset(self):
         self.ball_y = 3
-        ball_start = self.random.randint(2)
+        ball_start = self.random.integers(2)
         self.ball_x, self.ball_dir = [(0,2),(9,3)][ball_start]
         self.pos = 4
         self.brick_map = np.zeros((10,10))

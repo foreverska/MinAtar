@@ -55,7 +55,7 @@ class Env:
         }
         self.action_map = ['n','l','u','r','d','f']
         self.ramping = ramping
-        self.random = np.random.RandomState()
+        self.random = np.random.default_rng()
         self.reset()
 
     # Update environment according to agent action
@@ -227,10 +227,10 @@ class Env:
     # Spawn an enemy fish or submarine in random row and random direction,
     # if the resulting row and direction would lead to a collision, do nothing instead
     def _spawn_enemy(self):
-        lr = self.random.rand() < 1/2
-        is_sub = self.random.rand() < 1/3
+        lr = self.random.random() < 1/2
+        is_sub = self.random.random() < 1/3
         x = 0 if lr else 9
-        y = self.random.randint(low=1, high=9)
+        y = self.random.integers(low=1, high=9)
 
         # Do not spawn in same row an opposite direction as existing
         if(any([z[1]==y and z[2]!=lr for z in self.e_subs+self.e_fish])):
@@ -242,9 +242,9 @@ class Env:
 
     # Spawn a diver in random row with random direction
     def _spawn_diver(self):
-        lr = self.random.rand() < 1/2
+        lr = self.random.random() < 1/2
         x = 0 if lr else 9
-        y = self.random.randint(low=1, high=9)
+        y = self.random.integers(low=1, high=9)
         self.divers+=[[x,y,lr,diver_move_interval]]
 
     # Query the current level of the difficulty ramp, could be used as additional input to agent for example

@@ -81,12 +81,6 @@ For each game, in the v0 versions the action set has all 6 available actions (so
 while in the v1 versions the action set is reduced to just the minimal actions for each game.  
 Note that the results included in this repo and the associated paper use the full action set of 6 actions.
 
-> If you want to use the latest OpenAI Gym API (v0.26),
-install MinAtar v1.0.13 by running `pip install minatar==1.0.13`
-
-> If you want to use old OpenAI Gym API (without the `truncated` flag, and with the old `reset()` and `seed()` methods),
-install MinAtar v1.0.11 by running `pip install minatar==1.0.11`
-
 ## Visualizing the Environments
 We provide 2 ways to visualize a MinAtar environment.
 

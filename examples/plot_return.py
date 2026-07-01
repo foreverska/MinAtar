@@ -111,7 +111,16 @@ def plot_avg_return(file_name, granularity):
     order = int(math.log10(unique_frames[-1]))
     range_frames = int(unique_frames[-1]/ (10**order))
 
-    sns.tsplot(data=y, time=numpy.array(x)/(10**order), color='b')
+    # Using lineplot instead of deprecated tsplot
+    import pandas as pd
+    time = numpy.array(x)/(10**order)
+    # y has shape (num_runs, num_timepoints)
+    # Create a DataFrame for Seaborn
+    df = pd.DataFrame(y.T, index=time)
+    df.index.name = 'Time'
+    df_melted = df.reset_index().melt(id_vars='Time', var_name='Run', value_name='Return')
+    
+    sns.lineplot(data=df_melted, x='Time', y='Return', color='b', ax=ax)
     ax.set_xticks(numpy.arange(range_frames + 1))
     plt.show()
 
